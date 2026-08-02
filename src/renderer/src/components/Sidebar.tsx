@@ -311,6 +311,16 @@ function Sidebar(): React.JSX.Element {
           ))}
         </div>
       </section>
+
+      {/* Opens the shared About dialog — see public/about.js, which delegates
+          this attribute from the document, so nothing needs importing here.
+          One dialog for both builds: the Electron renderer is a web page too,
+          and its main process already routes target=_blank to the browser. */}
+      <section className="sidebar-about">
+        <button type="button" data-stoatworks-about>
+          About atem-scopes
+        </button>
+      </section>
     </aside>
   )
 }

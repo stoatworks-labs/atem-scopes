@@ -9,13 +9,16 @@
  * time. Anything with a build step injects the real one at build time and
  * overrides this.
  */
-window.STOATWORKS_ABOUT = Object.assign({
-  "name": "atem-scopes",
-  "slug": "atem-scopes",
-  "version": "v0.1.0",
-  "hook": "Scopes around an ATEM multiview",
-  "licence": "MIT",
-  "guide": "",
-  "page": "https://stoatworks-labs.com/software/atem-scopes/",
-  "repo": "https://github.com/stoatworks-labs/atem-scopes"
-}, window.STOATWORKS_ABOUT || {});
+window.STOATWORKS_ABOUT = Object.assign(
+  {
+    name: 'atem-scopes',
+    slug: 'atem-scopes',
+    version: 'v0.1.0',
+    hook: 'Scopes around an ATEM multiview',
+    licence: 'MIT',
+    guide: '',
+    page: 'https://stoatworks-labs.com/software/atem-scopes/',
+    repo: 'https://github.com/stoatworks-labs/atem-scopes'
+  },
+  window.STOATWORKS_ABOUT || {}
+)

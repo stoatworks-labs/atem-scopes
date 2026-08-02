@@ -111,6 +111,14 @@ h4 {
   border-bottom: 1px solid var(--line);
 }
 
+/* Last section in the sidebar, and deliberately not a control: no heading, no
+   border, just the way in to the About dialog. */
+.sidebar-about button {
+  width: 100%;
+  opacity: 0.75;
+}
+.sidebar-about button:hover { opacity: 1; }
+
 .sidebar section:last-child {
   border-bottom: 0;
 }
