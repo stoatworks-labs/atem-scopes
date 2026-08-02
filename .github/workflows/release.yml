@@ -1,0 +1,129 @@
+name: release
+
+# Electron installers for Windows, macOS and Linux. Each OS runner packages the
+# architectures listed in electron-builder.yml.
+#
+# Trigger by pushing a v* tag, or manually (Actions > release > Run workflow) to
+# check that all three still build without publishing anything.
+#
+# macOS x86_64 is cross-compiled on macos-14. The Intel macOS runners are retired
+# — never macos-13.
+#
+# Installers are unsigned. On macOS that means Gatekeeper will quarantine them,
+# and approving the .app does *not* unquarantine its nested helper binaries; the
+# README says so rather than leaving someone to discover it.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: linux, os: ubuntu-latest, platform: '--linux' }
+          - { name: windows, os: windows-latest, platform: '--win' }
+          - { name: macos, os: macos-14, platform: '--mac' }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Compile
+        run: npx electron-vite build
+
+      - name: Package
+        run: npx electron-builder ${{ matrix.platform }} --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build macOS .pkg installers
+        if: runner.os == 'macOS'
+        shell: bash
+        # electron-builder's own pkg target is not concurrency-safe: every
+        # architecture writes the same scratch distribution.xml and <appId>.pkg
+        # into the output dir, so building x64 and arm64 together makes one run
+        # delete what the other is reading. It is left out of
+        # electron-builder.yml and built here instead, one arch at a time,
+        # through the same vendored helper the local release script uses.
+        run: |
+          source scripts/release-lib.sh
+          version="$(node -p "require('./package.json').version")"
+          rl_init "atem-scopes" atem-scopes "$version" com.stoatworks.atem-scopes "$PWD/dist"
+          for d in dist/mac dist/mac-arm64 dist/mac-universal; do
+            [ -d "$d" ] || continue
+            app="$(cd "$d" && ls -d *.app 2>/dev/null | head -1)"
+            [ -n "$app" ] || continue
+            case "$d" in
+              */mac)           arch=x64 ;;
+              */mac-arm64)     arch=arm64 ;;
+              */mac-universal) arch=universal ;;
+            esac
+            rl_pkg "macos-$arch" "$d" --app "$app"
+          done
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: atem-scopes-${{ matrix.name }}
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.pkg
+            dist/*.zip
+            dist/*.deb
+            dist/*.AppImage
+          if-no-files-found: error
+
+  # The hosted build is part of the release too: someone reading the tag should
+  # be able to get the exact bundle that was live, without a Cloudflare account.
+  web:
+    name: hosted bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run static:build
+      - name: Check no switcher code leaked into the hosted bundle
+        run: |
+          if grep -rq "atem-connection\|9910" dist/assets/; then
+            echo "::error::Switcher code leaked into the hosted bundle"
+            exit 1
+          fi
+      - run: cd dist && zip -r ../atem-scopes-web.zip .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atem-scopes-web
+          path: atem-scopes-web.zip
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    needs: [build, web]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true

@@ -102,6 +102,17 @@ It captures native UYVY rather than letting the card convert to BGRA, deliberate
 not report which matrix it used, and RGB cannot be un-converted. See
 [`native/decklink/README.md`](native/decklink/README.md).
 
+## Download
+
+<!-- downloads:start -->
+<!-- downloads:end -->
+
+Installers are **unsigned**. On macOS, approving the app in System Settings does *not*
+unquarantine its nested helper binaries — if it bounces once and dies, clear the flag with
+`xattr -dr com.apple.quarantine /Applications/atem-scopes.app`.
+
+The hosted build needs no install: it runs in any browser with WebGL2.
+
 ## Commands
 
 ```bash
