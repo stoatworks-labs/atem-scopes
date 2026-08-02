@@ -102,6 +102,15 @@ It captures native UYVY rather than letting the card convert to BGRA, deliberate
 not report which matrix it used, and RGB cannot be un-converted. See
 [`native/decklink/README.md`](native/decklink/README.md).
 
+## Video
+
+[![atem-scopes](docs/video-thumb.png)](https://www.youtube.com/watch?v=ZABAnwzS8T0)
+
+A 57-second look at it working, filmed at the hosted address and driven through the app's
+own controls. The picture being measured is the built-in colour-bar generator, so every
+scope in it can be checked against a signal whose right answer is known — including the
+beat where the levels are set wrong on purpose and black falls below zero.
+
 ## Download
 
 <!-- downloads:start -->
