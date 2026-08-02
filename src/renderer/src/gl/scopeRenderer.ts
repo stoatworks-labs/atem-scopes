@@ -480,6 +480,9 @@ export class ScopeRenderer {
     // nothing to read anyway.
     const perBin = (cols * rows) / HISTOGRAM_BINS
     gl.uniform1f(u.at('uNorm'), (1 / (perBin * 8)) * (request.options.gain / 0.35))
+    // How many bins land behind one output pixel — the draw shader reduces over
+    // that span so a one-bin spike cannot fall between pixel centres.
+    gl.uniform1f(u.at('uBinsPerPixel'), HISTOGRAM_BINS / Math.max(1, viewW))
     gl.uniform4f(
       u.at('uChannelMask'),
       channels.r ? 1 : 0,

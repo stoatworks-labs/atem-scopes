@@ -237,11 +237,39 @@ precision highp float;
 uniform sampler2D uBins;
 uniform float uNorm;        // scales counts to 0..1 tile height
 uniform vec4 uChannelMask;  // which of R,G,B,luma to draw
+uniform float uBinsPerPixel;
 in vec2 vUv;
 out vec4 fragColour;
 
+/**
+ * Reduce every bin the output pixel covers, not just the one under its centre.
+ *
+ * A 256-bin histogram in a 240-pixel-wide tile puts more than one bin behind
+ * each pixel, and point-sampling then decides which bins are *visible* by where
+ * the pixel centres happen to land. A one-bin spike — clipped white, crushed
+ * black, a colour bar — can disappear entirely, and reappear when the tile is
+ * resized. That is precisely the reading a histogram exists to show.
+ *
+ * The reducer is max rather than mean, deliberately: a mean would average a
+ * narrow spike down against its empty neighbours and hide it just as
+ * effectively, only more smoothly.
+ */
+vec4 binMax(float u) {
+  int bins = textureSize(uBins, 0).x;
+  float halfSpan = max(uBinsPerPixel, 1.0) * 0.5;
+  float centre = u * float(bins);
+  int first = int(max(0.0, floor(centre - halfSpan)));
+  int last = int(min(float(bins - 1), ceil(centre + halfSpan)));
+  vec4 peak = vec4(0.0);
+  // Bounded so an absurdly narrow tile cannot spin the fragment shader.
+  for (int i = first; i <= last && i - first < 32; i++) {
+    peak = max(peak, texelFetch(uBins, ivec2(i, 0), 0));
+  }
+  return peak;
+}
+
 void main() {
-  vec4 counts = texture(uBins, vec2(vUv.x, 0.5)) * uNorm;
+  vec4 counts = binMax(vUv.x) * uNorm;
   vec3 rgb = vec3(0.0);
   float a = 0.0;
 

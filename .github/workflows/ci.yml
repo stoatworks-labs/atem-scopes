@@ -22,6 +22,14 @@ jobs:
       # Both bundles, because a change to shared/ can break one and not the other.
       - run: npm run static:build
       - run: npx electron-vite build
+      # A GLSL bug ships silently — it typechecks, lints, tests and bundles,
+      # because a shader is only a string until a driver sees it. This loads the
+      # built page in SwiftShader and compiles every program for real.
+      - name: shaders compile and link
+        run: ./scripts/check-shaders.sh
+        env:
+          CHROME: /usr/bin/google-chrome
+
       # The hosted build must contain no switcher code at all. This is the
       # build-time backend split working, and it is worth failing CI over.
       - name: hosted bundle carries no ATEM protocol code

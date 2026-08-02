@@ -101,6 +101,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run static:build
+      - name: Shaders compile and link
+        run: ./scripts/check-shaders.sh
+        env:
+          CHROME: /usr/bin/google-chrome
+
       - name: Check no switcher code leaked into the hosted bundle
         run: |
           if grep -rq "atem-connection\|9910" dist/assets/; then
