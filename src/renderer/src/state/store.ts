@@ -73,21 +73,24 @@ function newId(): string {
  * tile pointed at the wrong window is worse than an empty one.
  */
 function defaultWorkspace(): Workspace {
-  const kinds: ScopeKind[] = ['picture', 'waveformLuma', 'vectorscope', 'histogram']
+  // Tiles are laid out roughly 2:1 rather than square, because a picture tile is
+  // letterboxed to its source: a 16:9 window in a tall tile is mostly black bars.
+  const layout: { kind: ScopeKind; grid: Tile['grid'] }[] = [
+    { kind: 'picture', grid: { col: 0, row: 0, colSpan: 2, rowSpan: 1 } },
+    { kind: 'waveformLuma', grid: { col: 2, row: 0, colSpan: 2, rowSpan: 1 } },
+    { kind: 'vectorscope', grid: { col: 0, row: 1, colSpan: 1, rowSpan: 1 } },
+    { kind: 'histogram', grid: { col: 1, row: 1, colSpan: 1, rowSpan: 1 } },
+    { kind: 'waveformParadeRgb', grid: { col: 2, row: 1, colSpan: 2, rowSpan: 1 } }
+  ]
   return {
     id: newId(),
     name: 'Default',
     columns: 4,
     rows: 2,
     interpretation: { ...DEFAULT_INTERPRETATION },
-    tiles: [
-      { kind: 'picture', grid: { col: 0, row: 0, colSpan: 2, rowSpan: 2 } },
-      { kind: 'waveformLuma', grid: { col: 2, row: 0, colSpan: 2, rowSpan: 1 } },
-      { kind: 'vectorscope', grid: { col: 2, row: 1, colSpan: 1, rowSpan: 1 } },
-      { kind: 'histogram', grid: { col: 3, row: 1, colSpan: 1, rowSpan: 1 } }
-    ].map((t, i) => ({
+    tiles: layout.map((t) => ({
       id: newId(),
-      kind: kinds[i],
+      kind: t.kind,
       source: null,
       options: { ...DEFAULT_SCOPE_OPTIONS },
       grid: t.grid

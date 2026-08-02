@@ -293,13 +293,18 @@ export const PICTURE_VERT = /* glsl */ `#version 300 es
 precision highp float;
 layout(location = 0) in vec2 aQuad;
 uniform vec4 uCrop;
+// Letterbox/pillarbox factors, 1.0 on the axis that fills the tile. A picture
+// stretched to fit its tile is not a picture of the signal: a 16:9 multiview
+// window in a tall tile reads as the wrong lens, and any judgement about framing
+// made from it is wrong.
+uniform vec2 uFit;
 out vec2 vUv;
 void main() {
   // Quad y runs 0 at the bottom in NDC but the crop's y is top-left origin, so
   // v is flipped here rather than by flipping the texture upload (which every
   // other pass would then have to undo).
   vUv = uCrop.xy + uCrop.zw * vec2(aQuad.x, 1.0 - aQuad.y);
-  gl_Position = vec4(aQuad * 2.0 - 1.0, 0.0, 1.0);
+  gl_Position = vec4((aQuad * 2.0 - 1.0) * uFit, 0.0, 1.0);
 }
 `
 

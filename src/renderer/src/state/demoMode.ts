@@ -24,14 +24,11 @@ import {
   TEST_PATTERN_LABEL
 } from '../capture/testPattern'
 import { layoutCells } from '@shared/multiviewLayout'
-import { calibrationKey, DEFAULT_INSET, type ScopeKind } from '@shared/protocol'
+import { calibrationKey, DEFAULT_INSET } from '@shared/protocol'
 import { useStore } from './store'
 
 /** MultiViewerLayout.Default — four equal quadrants, which is what the pattern draws. */
 const DEFAULT_MULTIVIEWER_LAYOUT = 0
-
-/** Scopes to show, in the order the default workspace lays its tiles out. */
-const DEMO_KINDS: ScopeKind[] = ['picture', 'waveformLuma', 'vectorscope', 'histogram']
 
 export function demoRequested(): boolean {
   const params = new URLSearchParams(window.location.search)
@@ -78,12 +75,23 @@ export async function startDemo(): Promise<void> {
 
   const workspace = useStore.getState().workspace
   workspace.tiles.forEach((tile, index) => {
-    const kind = DEMO_KINDS[index % DEMO_KINDS.length]
+    // The default workspace already carries the right scopes; demo mode only
+    // gives them something to look at, so the public link opens on the same
+    // layout a first-time visitor gets rather than a special one.
+    const kind = tile.kind
     useStore.getState().updateTile(tile.id, {
-      kind,
       // A generated pattern has no noise to spread the vectorscope trace, so
       // each bar is a single point. Real video does not need this.
-      options: { ...tile.options, traceWidth: kind === 'vectorscope' ? 4 : tile.options.traceWidth }
+      //
+      // The histogram gets more scale for the same reason from the other end: a
+      // pattern of eight discrete levels plus a ramp is a few needle spikes over a
+      // low plateau, where real video fills the range. Both are display settings the
+      // tile exposes, not a different measurement.
+      options: {
+        ...tile.options,
+        traceWidth: kind === 'vectorscope' ? 4 : tile.options.traceWidth,
+        gain: kind === 'histogram' ? 0.9 : tile.options.gain
+      }
     })
     useStore.getState().setTileSource(tile.id, {
       kind: 'multiviewWindow',

@@ -256,7 +256,7 @@ export class ScopeRenderer {
 
     switch (request.kind) {
       case 'picture':
-        this.drawPicture(request, entry, interpretation)
+        this.drawPicture(request, entry, interpretation, w, h)
         break
       case 'waveformLuma':
         this.drawWaveform(request, entry, interpretation, 0, 1, w)
@@ -322,11 +322,24 @@ export class ScopeRenderer {
   private drawPicture(
     request: RenderRequest,
     entry: DeviceTexture,
-    interpretation: SignalInterpretation
+    interpretation: SignalInterpretation,
+    tileWidthPx: number,
+    tileHeightPx: number
   ): void {
     const gl = this.gl
     const u = this.bindCommon('picture', entry, interpretation, request.crop, this.linearSampler)
     const o = request.options
+
+    // Fit the crop into the tile without distorting it. The source aspect is the
+    // crop's aspect *in source pixels*, not the crop's normalised numbers — a
+    // quarter-frame window of a 16:9 capture is 16:9, but its normalised rect is
+    // square.
+    const sourceAspect =
+      (entry.width * request.crop.width) / Math.max(1, entry.height * request.crop.height)
+    const tileAspect = tileWidthPx / Math.max(1, tileHeightPx)
+    const fit: [number, number] =
+      sourceAspect > tileAspect ? [1, tileAspect / sourceAspect] : [sourceAspect / tileAspect, 1]
+    gl.uniform2f(u.at('uFit'), fit[0], fit[1])
 
     gl.uniform2f(u.at('uTexel'), 1 / entry.width, 1 / entry.height)
     const overlayIndex = { none: 0, falseColour: 1, zebra: 2, focusPeaking: 3 }[o.overlay]
