@@ -1,0 +1,34 @@
+# Cloudflare Worker config — static assets only.
+#
+# The hosted build of atem-scopes is a fully static SPA: video is captured and
+# analysed on the page and never leaves the browser. There is no backend and
+# nothing to have one for.
+#
+# It is deployed as a *Worker* rather than a Pages project because that is what
+# Cloudflare's "Import a repository" flow creates and what the rest of the fleet
+# uses. `[assets] directory` is the Worker form; the Pages form is
+# `pages_build_output_dir` and the two are not interchangeable — a repo carrying
+# the Pages key fails a Worker build with "Could not detect a directory
+# containing static files", which reads like a missing build rather than the
+# wrong key.
+#
+# Build command in the Cloudflare project (not here):
+#   npm ci && npm run static:build
+# Deploy command:
+#   npx wrangler deploy
+#
+# `public/_headers` is copied into dist/ by Vite and honoured by the assets
+# runtime. There is deliberately no `_redirects`: the Pages way to route an SPA
+# is `/*  /index.html  200` there, and the assets runtime rejects it as an
+# infinite loop and fails the whole deploy. `not_found_handling` is the Worker
+# equivalent.
+name = "atem-scopes"
+compatibility_date = "2026-08-02"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+
+[[routes]]
+pattern = "atem-scopes.stoatworks-labs.com"
+custom_domain = true

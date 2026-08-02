@@ -1,0 +1,23 @@
+appId: com.stoatworks.atem-scopes
+productName: atem-scopes
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!native/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!vite.static.config.{js,ts}'
+  - '!{.eslintcache,eslint.config.mjs,.prettierrc,tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!{.env,.env.*,.npmrc}'
+mac:
+  # Cross-compiling x86_64 must happen on macos-14; macos-13 runners are gone.
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+  category: public.app-category.video
+win:
+  target: [nsis]
+linux:
+  target: [AppImage]
+  category: AudioVideo

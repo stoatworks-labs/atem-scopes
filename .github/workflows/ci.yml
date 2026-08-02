@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Covers main/preload and renderer/web — a bare tsc misses one of them.
+      - run: npm run typecheck
+      - run: npm test
+      # Both bundles, because a change to shared/ can break one and not the other.
+      - run: npm run static:build
+      - run: npx electron-vite build
+      # The hosted build must contain no switcher code at all. This is the
+      # build-time backend split working, and it is worth failing CI over.
+      - name: hosted bundle carries no ATEM protocol code
+        run: |
+          if grep -rq "atem-connection\|9910" dist/assets/; then
+            echo "::error::Switcher code leaked into the hosted bundle"
+            exit 1
+          fi
