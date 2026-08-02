@@ -78,7 +78,7 @@ function defaultWorkspace(): Workspace {
     id: newId(),
     name: 'Default',
     columns: 4,
-    rows: 3,
+    rows: 2,
     interpretation: { ...DEFAULT_INTERPRETATION },
     tiles: [
       { kind: 'picture', grid: { col: 0, row: 0, colSpan: 2, rowSpan: 2 } },

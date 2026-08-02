@@ -5,6 +5,16 @@ import { availableSources, sameSource } from '../sources/sourceModel'
 import { useStore } from '../state/store'
 import TileOptions from './TileOptions'
 
+/** Short badge shown on the tile header, where there is room for a word at most. */
+const KIND_TAGS: Record<ScopeKind, string> = {
+  picture: 'PIC',
+  waveformLuma: 'WFM',
+  waveformParadeRgb: 'RGB',
+  waveformParadeYcbcr: 'YCC',
+  vectorscope: 'VEC',
+  histogram: 'HIST'
+}
+
 const KIND_LABELS: Record<ScopeKind, string> = {
   picture: 'Picture',
   waveformLuma: 'Waveform (luma)',
@@ -60,20 +70,13 @@ function TileChrome({ tile, resolved, histogramSupported, registerRef }: Props):
       }}
     >
       <header className="tile__head">
-        <select
-          className="tile__kind"
-          value={tile.kind}
-          onChange={(e) => updateTile(tile.id, { kind: e.target.value as ScopeKind })}
+        <button
+          className="tile__source"
+          title={`${KIND_LABELS[tile.kind]} — click to change source`}
+          onClick={() => setPickerOpen((v) => !v)}
         >
-          {(Object.keys(KIND_LABELS) as ScopeKind[]).map((kind) => (
-            <option key={kind} value={kind}>
-              {KIND_LABELS[kind]}
-            </option>
-          ))}
-        </select>
-
-        <button className="tile__source" onClick={() => setPickerOpen((v) => !v)}>
-          {resolved ? resolved.label : 'no source'}
+          <span className="tile__kindTag">{KIND_TAGS[tile.kind]}</span>
+          <span className="tile__sourceName">{resolved ? resolved.label : 'no source'}</span>
         </button>
 
         <div className="tile__actions">
@@ -127,7 +130,11 @@ function TileChrome({ tile, resolved, histogramSupported, registerRef }: Props):
       )}
 
       {optionsOpen && (
-        <TileOptions tile={tile} onChange={(options) => updateTile(tile.id, { options })} />
+        <TileOptions
+          tile={tile}
+          onKindChange={(kind) => updateTile(tile.id, { kind })}
+          onChange={(options) => updateTile(tile.id, { options })}
+        />
       )}
 
       <div className="tile__body" ref={registerRef}>

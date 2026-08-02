@@ -1,8 +1,18 @@
-import type { PictureOverlay, ScopeOptions, Tile } from '@shared/protocol'
+import type { PictureOverlay, ScopeKind, ScopeOptions, Tile } from '@shared/protocol'
 
 interface Props {
   tile: Tile
+  onKindChange: (kind: ScopeKind) => void
   onChange: (options: ScopeOptions) => void
+}
+
+const KIND_LABELS: Record<ScopeKind, string> = {
+  picture: 'Picture',
+  waveformLuma: 'Waveform (luma)',
+  waveformParadeRgb: 'Parade (RGB)',
+  waveformParadeYcbcr: 'Parade (Y/Cb/Cr)',
+  vectorscope: 'Vectorscope',
+  histogram: 'Histogram'
 }
 
 const OVERLAYS: { value: PictureOverlay; label: string }[] = [
@@ -13,7 +23,7 @@ const OVERLAYS: { value: PictureOverlay; label: string }[] = [
 ]
 
 /** Per-tile controls. Only the ones that mean something for the tile's kind are shown. */
-function TileOptions({ tile, onChange }: Props): React.JSX.Element {
+function TileOptions({ tile, onKindChange, onChange }: Props): React.JSX.Element {
   const o = tile.options
   const set = (patch: Partial<ScopeOptions>): void => onChange({ ...o, ...patch })
 
@@ -23,6 +33,17 @@ function TileOptions({ tile, onChange }: Props): React.JSX.Element {
 
   return (
     <div className="options">
+      <label>
+        Scope
+        <select value={tile.kind} onChange={(e) => onKindChange(e.target.value as ScopeKind)}>
+          {(Object.keys(KIND_LABELS) as ScopeKind[]).map((kind) => (
+            <option key={kind} value={kind}>
+              {KIND_LABELS[kind]}
+            </option>
+          ))}
+        </select>
+      </label>
+
       {tile.kind === 'picture' && (
         <>
           <label>
