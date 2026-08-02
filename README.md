@@ -105,6 +105,47 @@ not report which matrix it used, and RGB cannot be un-converted. See
 ## Download
 
 <!-- downloads:start -->
+
+## Download
+
+**[v0.1.0](https://github.com/stoatworks-labs/atem-scopes/releases/tag/v0.1.0)** — prebuilt for macOS, Windows and Linux. Pick your platform:
+
+<details>
+<summary><b>macOS</b> — Apple Silicon, Intel</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| Apple Silicon · .dmg disk image | [`atem-scopes-0.1.0-arm64.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-arm64.dmg) | 116 MB |
+| Intel · .dmg disk image | [`atem-scopes-0.1.0.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0.dmg) | 122 MB |
+| Apple Silicon · .pkg installer | [`atem-scopes-0.1.0-macos-arm64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-arm64.pkg) | 117 MB |
+| Intel · .pkg installer | [`atem-scopes-0.1.0-macos-x64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-x64.pkg) | 122 MB |
+
+</details>
+
+<details>
+<summary><b>Windows</b></summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| .exe installer | [`atem-scopes.Setup.0.1.0.exe`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes.Setup.0.1.0.exe) | 102 MB |
+
+</details>
+
+<details>
+<summary><b>Linux</b></summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| AppImage | [`atem-scopes-0.1.0.AppImage`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0.AppImage) | 122 MB |
+
+</details>
+
+Also in this release:
+
+- [`atem-scopes-web.zip`](https://github.com/stoatworks-labs/atem-scopes/releases/latest/download/atem-scopes-web.zip) — Source tarball, 84 KB
+
+All builds, checksums and release notes: [github.com/stoatworks-labs/atem-scopes/releases](https://github.com/stoatworks-labs/atem-scopes/releases).
+
 <!-- downloads:end -->
 
 Installers are **unsigned**. On macOS, approving the app in System Settings does _not_
