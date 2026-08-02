@@ -93,6 +93,32 @@ h4 {
   height: 100%;
 }
 
+/*
+ * Hosted build only. `data-hosted` is set by the transformIndexHtml plugin in
+ * vite.static.config.ts and never by electron-vite, so the desktop window keeps
+ * the viewport lock above and cannot be scrolled off the scopes.
+ *
+ * On the Worker the support footer is appended after #root, where `height:
+ * 100%` plus `overflow: hidden` leaves it unreachable. The height has to move
+ * onto `.app` as 100vh in the same breath as it comes off the ancestors:
+ * releasing html/body/#root while `.app` is still `height: 100%` resolves that
+ * percentage against an auto-height parent and collapses the grid. See the
+ * worked example at the top of pixel-peeker/src/styles.css.
+ */
+html[data-hosted],
+html[data-hosted] body,
+html[data-hosted] #root {
+  height: auto;
+}
+
+html[data-hosted] body {
+  overflow: visible;
+}
+
+html[data-hosted] .app {
+  height: 100vh;
+}
+
 .app__main {
   min-width: 0;
   overflow: hidden;
