@@ -113,20 +113,20 @@ not report which matrix it used, and RGB cannot be un-converted. See
 <details>
 <summary><b>macOS</b> — Apple Silicon, Intel</summary>
 
-| Build | Download | Size |
-| --- | --- | --- |
-| Apple Silicon · .dmg disk image | [`atem-scopes-0.1.0-arm64.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-arm64.dmg) | 116 MB |
-| Intel · .dmg disk image | [`atem-scopes-0.1.0.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0.dmg) | 122 MB |
-| Apple Silicon · .pkg installer | [`atem-scopes-0.1.0-macos-arm64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-arm64.pkg) | 117 MB |
-| Intel · .pkg installer | [`atem-scopes-0.1.0-macos-x64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-x64.pkg) | 122 MB |
+| Build                           | Download                                                                                                                                         | Size   |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
+| Apple Silicon · .dmg disk image | [`atem-scopes-0.1.0-arm64.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-arm64.dmg)             | 116 MB |
+| Intel · .dmg disk image         | [`atem-scopes-0.1.0.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0.dmg)                         | 122 MB |
+| Apple Silicon · .pkg installer  | [`atem-scopes-0.1.0-macos-arm64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-arm64.pkg) | 117 MB |
+| Intel · .pkg installer          | [`atem-scopes-0.1.0-macos-x64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-x64.pkg)     | 122 MB |
 
 </details>
 
 <details>
 <summary><b>Windows</b></summary>
 
-| Build | Download | Size |
-| --- | --- | --- |
+| Build          | Download                                                                                                                             | Size   |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------ |
 | .exe installer | [`atem-scopes.Setup.0.1.0.exe`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes.Setup.0.1.0.exe) | 102 MB |
 
 </details>
@@ -134,8 +134,8 @@ not report which matrix it used, and RGB cannot be un-converted. See
 <details>
 <summary><b>Linux</b></summary>
 
-| Build | Download | Size |
-| --- | --- | --- |
+| Build    | Download                                                                                                                           | Size   |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------ |
 | AppImage | [`atem-scopes-0.1.0.AppImage`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0.AppImage) | 122 MB |
 
 </details>

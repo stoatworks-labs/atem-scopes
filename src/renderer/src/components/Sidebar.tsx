@@ -69,6 +69,39 @@ function Sidebar(): React.JSX.Element {
     removeDevice(deviceId)
   }
 
+  interface DeviceRow {
+    deviceId: string
+    label: string
+    /** The enumerated UVC device, when there is one. The test pattern has none. */
+    input: MediaDeviceInfo | null
+    entry: (typeof devices)[number] | undefined
+  }
+
+  const rows: DeviceRow[] = [
+    ...devices.map((entry) => {
+      const input = inputs.find((i) => i.deviceId === entry.deviceId) ?? null
+      return { deviceId: entry.deviceId, label: entry.label, input, entry }
+    }),
+    ...inputs
+      .filter((input) => !devices.some((d) => d.deviceId === input.deviceId))
+      .map((input) => ({
+        deviceId: input.deviceId,
+        label: input.label || 'unnamed device',
+        input,
+        entry: undefined
+      }))
+  ]
+
+  const closeRow = (row: DeviceRow): void => {
+    // The generated pattern owns a canvas and an interval as well as its stream,
+    // so it has to be stopped rather than merely closed.
+    if (row.deviceId === TEST_PATTERN_DEVICE_ID) {
+      testPattern?.stop()
+      setTestPattern(null)
+    }
+    close(row.deviceId)
+  }
+
   const calibrate = (deviceId: string): void => {
     const capture = captureManager.get(deviceId)
     const device = devices.find((d) => d.deviceId === deviceId)
@@ -94,52 +127,57 @@ function Sidebar(): React.JSX.Element {
           </button>
         )}
 
+        {/*
+          Rows come from the *open* devices first and the merely available ones
+          after, rather than from `enumerateDevices` alone. The built-in test
+          pattern is a real open device in the store with no MediaDeviceInfo
+          behind it, so an enumeration-driven list left it with no role selector
+          and no way to reach its regions at all — the one source anybody can try
+          without hardware was the one source that could not be calibrated.
+        */}
         <ul className="devices">
-          {inputs.map((input, index) => {
-            const entry = devices.find((d) => d.deviceId === input.deviceId)
-            const capture = captureManager.get(input.deviceId)
-            const error = captureManager.getError(input.deviceId)
-            const key = capture
-              ? calibrationKey(input.deviceId, capture.width, capture.height)
-              : null
+          {rows.map((row, index) => {
+            const capture = captureManager.get(row.deviceId)
+            const error = captureManager.getError(row.deviceId)
+            const key = capture ? calibrationKey(row.deviceId, capture.width, capture.height) : null
             const calibrated = key ? calibrations[key] : undefined
 
             return (
-              // A device with no id yet (labels not primed) still needs a
-              // stable key — Math.random() here remounts the row every render
-              // and loses focus mid-typing.
-              <li key={input.deviceId || `device-${index}`} data-tick={captureTick}>
+              // A device with no id yet (labels not primed) still needs a stable
+              // key — Math.random() here remounts the row every render and loses
+              // focus mid-typing.
+              <li key={row.deviceId || `device-${index}`} data-tick={captureTick}>
                 <div className="devices__row">
                   <span className="devices__name">
-                    {input.label || 'unnamed device'}
+                    {row.label}
                     {capture && capture.width > 0 && (
                       <em>
                         {capture.width}×{capture.height}
                       </em>
                     )}
                   </span>
-                  {entry ? (
-                    <button onClick={() => close(input.deviceId)}>Close</button>
+                  {row.entry ? (
+                    <button onClick={() => closeRow(row)}>{row.input ? 'Close' : 'Stop'}</button>
                   ) : (
-                    <button onClick={() => open(input)}>Open</button>
+                    <button onClick={() => row.input && open(row.input)}>Open</button>
                   )}
                 </div>
 
                 {error && <p className="notice notice--error">{error}</p>}
 
-                {entry && (
+                {row.entry && (
                   <div className="devices__controls">
                     <select
-                      value={entry.role}
+                      value={row.entry.role}
                       onChange={(e) =>
-                        setDeviceRole(entry.deviceId, e.target.value as 'multiview' | 'fullRaster')
+                        setDeviceRole(row.deviceId, e.target.value as 'multiview' | 'fullRaster')
                       }
                     >
                       <option value="multiview">Multiview</option>
                       <option value="fullRaster">Full raster</option>
                     </select>
-                    {entry.role === 'multiview' && (
-                      <button onClick={() => calibrate(entry.deviceId)}>
+                    {row.entry.role === 'multiview' && (
+                      <button onClick={() => calibrate(row.deviceId)}>
                         {calibrated
                           ? calibrated.seeded
                             ? 'Check regions'
@@ -152,21 +190,12 @@ function Sidebar(): React.JSX.Element {
               </li>
             )
           })}
-          {inputs.length === 0 && <p className="hint">No video input devices found.</p>}
+          {rows.length === 0 && <p className="hint">No video input devices found.</p>}
         </ul>
 
-        <div className="panel__row">
-          {devices.some((d) => d.deviceId === TEST_PATTERN_DEVICE_ID) ? (
-            <button
-              onClick={() => {
-                testPattern?.stop()
-                setTestPattern(null)
-                close(TEST_PATTERN_DEVICE_ID)
-              }}
-            >
-              Stop test pattern
-            </button>
-          ) : (
+        {/* Stopping it is on its own row above, like any other open device. */}
+        {!devices.some((d) => d.deviceId === TEST_PATTERN_DEVICE_ID) && (
+          <div className="panel__row">
             <button
               onClick={async () => {
                 const handle = startTestPattern()
@@ -186,8 +215,9 @@ function Sidebar(): React.JSX.Element {
             >
               Start test pattern
             </button>
-          )}
-        </div>
+          </div>
+        )}
+
         <p className="hint">
           Four quadrants of 75% bars over a ramp, with a label bar burnt in like a real multiview.
           With the vectorscope on 75% bars the trace must sit in the graticule boxes — if it does
