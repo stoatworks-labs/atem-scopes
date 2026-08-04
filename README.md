@@ -124,10 +124,9 @@ beat where the levels are set wrong on purpose and black falls below zero.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Apple Silicon · .dmg disk image | [`atem-scopes-0.1.0-arm64.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-arm64.dmg) | 116 MB |
-| Intel · .dmg disk image | [`atem-scopes-0.1.0.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0.dmg) | 122 MB |
-| Apple Silicon · .pkg installer | [`atem-scopes-0.1.0-macos-arm64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-arm64.pkg) | 117 MB |
-| Intel · .pkg installer | [`atem-scopes-0.1.0-macos-x64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-x64.pkg) | 122 MB |
+| .dmg disk image | [`atem-scopes-0.1.0.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0.dmg) | 124 MB |
+| Apple Silicon · .pkg installer | [`atem-scopes-0.1.0-macos-arm64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-arm64.pkg) | 116 MB |
+| Intel · .pkg installer | [`atem-scopes-0.1.0-macos-x64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.1.0/atem-scopes-0.1.0-macos-x64.pkg) | 124 MB |
 
 </details>
 
@@ -154,6 +153,8 @@ Also in this release:
 - [`atem-scopes-web.zip`](https://github.com/stoatworks-labs/atem-scopes/releases/latest/download/atem-scopes-web.zip) — Source tarball, 84 KB
 
 All builds, checksums and release notes: [github.com/stoatworks-labs/atem-scopes/releases](https://github.com/stoatworks-labs/atem-scopes/releases).
+
+macOS builds are signed and notarised and open normally. The Windows builds are unsigned, so SmartScreen warns once.
 
 <!-- downloads:end -->
 
