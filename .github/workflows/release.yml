@@ -76,7 +76,7 @@ jobs:
           done
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: atem-scopes-${{ matrix.name }}
           path: |
@@ -113,7 +113,7 @@ jobs:
             exit 1
           fi
       - run: cd dist && zip -r ../atem-scopes-web.zip .
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: atem-scopes-web
           path: atem-scopes-web.zip
