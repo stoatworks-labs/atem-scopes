@@ -189,6 +189,10 @@ npm run build:mac        # / :win / :linux
 atem-scopes never sends a command to a switcher. It connects, reads the multiviewer window
 assignments and input names, and disconnects.
 
+<!-- attributions:start -->
+This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
+<!-- attributions:end -->
+
 ## Licence
 
 MIT — see [LICENSE](LICENSE).
