@@ -157,9 +157,9 @@ All builds, checksums and release notes: [github.com/stoatworks-labs/atem-scopes
 
 <!-- downloads:end -->
 
-Installers are **unsigned**. On macOS, approving the app in System Settings does _not_
-unquarantine its nested helper binaries — if it bounces once and dies, clear the flag with
-`xattr -dr com.apple.quarantine /Applications/atem-scopes.app`.
+macOS installers are **Developer ID-signed and notarised by Apple**, nested helper
+binaries included, so they open normally. Windows installers are unsigned and
+SmartScreen warns once: **More info** → **Run anyway**.
 
 The hosted build needs no install: it runs in any browser with WebGL2.
 
