@@ -37,6 +37,7 @@ function supportFooter(): Plugin {
                 defer: true,
                 'data-app': 'atem-scopes',
                 'data-repo': 'https://github.com/stoatworks-labs/atem-scopes',
+                'data-version': `v${pkg.version}`,
                 'data-note':
                   'It runs entirely in your browser — the video is measured on your machine and never leaves it.'
               }
