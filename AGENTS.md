@@ -138,3 +138,10 @@ When you add a claim to the README, make sure it is one of the two kinds above a
   don't add any.
 - "Commit" means commit **and** push.
 - Cross-compile macOS x86_64 on `macos-14`, never `macos-13`.
+
+## Notes
+
+`docs/NOTES.md` carries this repo's working notes — current status, decisions
+already made, and the traps that have actually bitten. Read it before changing
+anything non-obvious. Cross-cutting fleet knowledge lives in
+[fleet-notes](https://github.com/stoatworks-labs/fleet-notes).
