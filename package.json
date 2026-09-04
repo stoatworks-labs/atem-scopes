@@ -1,7 +1,7 @@
 {
   "name": "atem-scopes",
   "productName": "atem-scopes",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Video scopes around a live ATEM multiview: waveform, vectorscope, histogram, false colour, zebras and focus peaking on any multiview window, program or preview, with sources named live from the switcher's own multiviewer config.",
   "private": true,
   "main": "./out/main/index.js",
