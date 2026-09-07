@@ -12,10 +12,13 @@
 # containing static files", which reads like a missing build rather than the
 # wrong key.
 #
-# Build command in the Cloudflare project (not here):
-#   npm ci && npm run static:build
-# Deploy command:
-#   npx wrangler deploy
+# Deploys are automatic: .github/workflows/deploy.yml runs `npm run static:build`
+# and then `wrangler deploy` on every push to main. `static:build` — not `build`,
+# which is the Electron app — is what produces the site in dist/.
+#
+# No Cloudflare build is connected to this repo and none ever was, whatever the
+# previous note here implied: thirteen commits sat undeployed behind it. Do not
+# connect one.
 #
 # `public/_headers` is copied into dist/ by Vite and honoured by the assets
 # runtime. There is deliberately no `_redirects`: the Pages way to route an SPA
