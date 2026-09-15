@@ -4,6 +4,10 @@ atem-scopes puts **video scopes around a live ATEM multiview**. Capture the swit
 output over USB, draw a region round each window, and put a waveform, vectorscope, histogram, false
 colour, zebras or focus peaking on any of them — including program and preview.
 
+![The browser build on its built-in test pattern: 75% bars over a ramp in four multiview windows, with a picture tile, a waveform, a vectorscope, a histogram a…](screenshots/demo.png)
+
+*The browser build on its built-in test pattern: 75% bars over a ramp in four multiview windows, with a picture tile, a waveform, a vectorscope, a histogram and an RGB parade. The signal is synthetic; the scopes are the real ones.*
+
 Sources are named from the switcher's own multiviewer configuration, **live**, so re-routing a
 multiview window mid-show relabels the scope watching it without touching the geometry.
 
