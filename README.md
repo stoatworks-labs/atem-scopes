@@ -12,6 +12,10 @@ zebras or focus peaking on any of them — including program and preview.
 Sources are named from the switcher's own multiviewer configuration, live, so re-routing a
 multiview window mid-show relabels the scope watching it without touching the geometry.
 
+![The browser build in demo mode: the built-in test pattern in four multiview windows with a waveform, vectorscope, histogram and RGB parade](docs/screenshots/demo.png)
+
+<sub>The browser build on its built-in test pattern (`?demo=1`): 75 % bars over a ramp in four multiview windows, with a picture tile, a waveform, a vectorscope, a histogram and an RGB parade. The signal is synthetic; the scopes are the real ones.</sub>
+
 ## Two builds, one codebase
 
 |                                     | Desktop (Electron)     | Hosted (Cloudflare Worker) |
