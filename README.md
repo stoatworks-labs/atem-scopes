@@ -116,8 +116,6 @@ own controls. The picture being measured is the built-in colour-bar generator, s
 scope in it can be checked against a signal whose right answer is known, including the
 bit where the levels are set wrong on purpose and black falls below zero.
 
-## Download
-
 <!-- downloads:start -->
 
 ## Download
