@@ -2,12 +2,12 @@
 
 > **AI-assisted project.** This codebase was created with [Claude Code](https://claude.com/claude-code)
 > (Anthropic), directed and reviewed by a human author. The scope engine is verified against a
-> built-in test pattern (see [Verification](#verification)); it has **not** been used with a real
-> ATEM switcher, a real multiview capture, or a DeckLink card.
+> built-in test pattern (see [Verification](#verification)), but it **hasn't** been used with a
+> real ATEM switcher, a real multiview capture or a DeckLink card.
 
 Video scopes arranged around a live ATEM multiview. Capture the switcher's multiview output over
 USB, draw a region round each window, and put a waveform, vectorscope, histogram, false colour,
-zebras or focus peaking on any of them — including program and preview.
+zebras or focus peaking on any of them, program and preview included.
 
 Sources are named from the switcher's own multiviewer configuration, live, so re-routing a
 multiview window mid-show relabels the scope watching it without touching the geometry.
@@ -25,27 +25,28 @@ multiview window mid-show relabels the scope watching it without touching the ge
 | Live source names from the switcher | ✅                     | ❌                         |
 | DeckLink capture                    | ⚠️ unbuilt — see below | ❌                         |
 
-The hosted build's two gaps are properties of the browser, not features left undone:
+The hosted build's two gaps are down to the browser rather than unfinished features:
 
 - **The ATEM control protocol is UDP on port 9910.** A page has no UDP API. WebRTC and
-  WebTransport are negotiated transports; neither can talk to a switcher that has never heard of
-  them. simpleVIS documents the identical wall for Art-Net and sACN.
-- **A DeckLink card is reached through Blackmagic's SDK against a kernel driver.** It does not
-  enumerate as a webcam, so `getUserMedia` cannot see it. Blackmagic's _boxes_ — UltraStudio
-  Recorder 3G, the Web Presenter family — deliberately do present as UVC, and those work in the
-  browser like any other camera. The PCIe cards do not.
+  WebTransport are negotiated transports, and neither can talk to a switcher that's never heard
+  of them. simpleVIS documents the same wall for Art-Net and sACN.
+- **A DeckLink card is reached through Blackmagic's SDK against a kernel driver.** It doesn't
+  enumerate as a webcam, so `getUserMedia` can't see it. Blackmagic's _boxes_ (UltraStudio
+  Recorder 3G, the Web Presenter family) do present as UVC, on purpose, and those work in the
+  browser like any other camera. The PCIe cards don't.
 
 So the hosted build names regions from what you type when you draw them, and the desktop build
 prefers the switcher's answer. Same screen, same workflow.
 
-Components branch on `window.api.capabilities` and hide what the current target cannot do rather
+Components branch on `window.api.capabilities` and hide what the current target can't do rather
 than offering a button that always fails. The backend is chosen at _build_ time, so the hosted
-bundle contains no switcher code at all — verifiably: `grep 9910 dist/assets/*.js` finds nothing.
+bundle has no switcher code in it at all, and you can check: `grep 9910 dist/assets/*.js` finds
+nothing.
 
 ## The thing this app is careful about
 
-**We never see the video signal. We see whatever RGB the capture path handed the browser**, and
-that path has already made two decisions it does not report:
+**The app never sees the video signal. It sees whatever RGB the capture path handed the
+browser**, and that path has already made two decisions it doesn't tell you about:
 
 1. which matrix it used to get from Y'CbCr to RGB (BT.601 or BT.709), and
 2. whether it expanded studio-range levels (16–235) to full range.
@@ -54,24 +55,24 @@ Get either wrong and the scopes are _plausibly_ wrong rather than obviously wron
 read as BT.601 throws every vectorscope target 5.74° off its box; unexpanded studio levels put
 reference white at 92 IRE. Both look like a mildly misadjusted camera.
 
-There is no way to detect this from the pixels, so it is an explicit setting the UI states, not a
-guess. See [`src/shared/colorimetry.ts`](src/shared/colorimetry.ts).
+There's no way to detect this from the pixels, so it's an explicit setting the UI shows you, not
+a guess. See [`src/shared/colorimetry.ts`](src/shared/colorimetry.ts).
 
-Two related honesty points the UI surfaces per tile:
+The UI flags two related things on each tile:
 
-- **A multiview tile is a monitoring aid, not a measurement.** It is a few hundred pixels wide,
+- **A multiview tile is a monitoring aid, not a measurement.** It's a few hundred pixels wide,
   compressed over USB, and often has a label bar, tally border or audio meter burnt into it. The
   window inset exists to keep those out of the trace, and a tile whose window the switcher reports
   an overlay on is badged `overlay in crop`.
 - **Seeded geometry is badged `uncalibrated`** until a human has looked at it.
 
-For an honest measurement, capture an aux out whole as a second device and scope that.
+For a proper measurement, capture an aux out whole as a second device and scope that.
 
 ## Verification
 
 The app generates its own 75% colour bars (`Start test pattern`), for the same reason simpleRTA
-generates its own pink noise: it is the only way to check the instrument without trusting the thing
-you are measuring. It is self-validating — the vectorscope graticule is computed from the same
+generates its own pink noise: it's the only way to check the instrument without trusting the thing
+you're measuring. It checks itself, too: the vectorscope graticule is computed from the same
 matrix the shader plots with, so with 75% bars the trace _must_ land in the boxes.
 
 Measured by reading pixels back off the GL canvas, BT.709, full range:
@@ -89,7 +90,7 @@ Measured by reading pixels back off the GL canvas, BT.709, full range:
 Differences are the row quantisation of the readback. The vectorscope trace landed on its cyan,
 green and blue 75% targets to within a pixel.
 
-**What that does and does not prove.** It proves the maths, the shader uniforms, the graticule
+**What that does and doesn't prove.** It proves the maths, the shader uniforms, the graticule
 derivation and the full capture→texture→scope path agree end to end. It proves nothing about a real
 ATEM: no switcher has ever been connected, no multiview has been captured, and the mapping from
 multiview window index to screen position is an assumption the calibration screen exists to correct.
@@ -97,13 +98,13 @@ multiview window index to screen position is an assumption the calibration scree
 ## DeckLink
 
 The native addon in [`native/decklink`](native/decklink) **has never been compiled or run.** The
-Blackmagic SDK is a free but licence-gated download and is not ours to redistribute, so it is not
-vendored and was not available where this was written. It builds only with `DECKLINK_SDK_DIR` set,
-and the app is fully functional without it — `capabilities.decklinkCapture` is false and the UI
-hides DeckLink entirely.
+Blackmagic SDK is a free but licence-gated download and isn't mine to redistribute, so it isn't
+vendored and wasn't available where this was written. It only builds with `DECKLINK_SDK_DIR` set,
+and the app works fully without it: `capabilities.decklinkCapture` is false and the UI hides
+DeckLink entirely.
 
-It captures native UYVY rather than letting the card convert to BGRA, deliberately: the driver does
-not report which matrix it used, and RGB cannot be un-converted. See
+It captures native UYVY rather than letting the card convert to BGRA, on purpose: the driver
+doesn't report which matrix it used, and you can't un-convert RGB. See
 [`native/decklink/README.md`](native/decklink/README.md).
 
 ## Video
@@ -112,8 +113,8 @@ not report which matrix it used, and RGB cannot be un-converted. See
 
 A 57-second look at it working, filmed at the hosted address and driven through the app's
 own controls. The picture being measured is the built-in colour-bar generator, so every
-scope in it can be checked against a signal whose right answer is known — including the
-beat where the levels are set wrong on purpose and black falls below zero.
+scope in it can be checked against a signal whose right answer is known, including the
+bit where the levels are set wrong on purpose and black falls below zero.
 
 ## Download
 
@@ -200,4 +201,4 @@ This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTI
 
 ## Licence
 
-MIT — see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
