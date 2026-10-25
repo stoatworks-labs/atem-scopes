@@ -120,17 +120,17 @@ bit where the levels are set wrong on purpose and black falls below zero.
 
 ## Download
 
-**[v0.2.3](https://github.com/stoatworks-labs/atem-scopes/releases/tag/v0.2.3)** — prebuilt for macOS, Windows and Linux. Pick your platform:
+**[v0.2.4](https://github.com/stoatworks-labs/atem-scopes/releases/tag/v0.2.4)** — prebuilt for macOS, Windows and Linux. Pick your platform:
 
 <details>
 <summary><b>macOS</b> — Apple Silicon, Intel</summary>
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Apple Silicon · .dmg disk image | [`atem-scopes-0.2.3-arm64.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.3/atem-scopes-0.2.3-arm64.dmg) | 135 MB |
-| Intel · .dmg disk image | [`atem-scopes-0.2.3.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.3/atem-scopes-0.2.3.dmg) | 142 MB |
-| Apple Silicon · .pkg installer | [`atem-scopes-0.2.3-macos-arm64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.3/atem-scopes-0.2.3-macos-arm64.pkg) | 135 MB |
-| Intel · .pkg installer | [`atem-scopes-0.2.3-macos-x64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.3/atem-scopes-0.2.3-macos-x64.pkg) | 142 MB |
+| Apple Silicon · .dmg disk image | [`atem-scopes-0.2.4-arm64.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.4/atem-scopes-0.2.4-arm64.dmg) | 135 MB |
+| Intel · .dmg disk image | [`atem-scopes-0.2.4.dmg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.4/atem-scopes-0.2.4.dmg) | 142 MB |
+| Apple Silicon · .pkg installer | [`atem-scopes-0.2.4-macos-arm64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.4/atem-scopes-0.2.4-macos-arm64.pkg) | 135 MB |
+| Intel · .pkg installer | [`atem-scopes-0.2.4-macos-x64.pkg`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.4/atem-scopes-0.2.4-macos-x64.pkg) | 142 MB |
 
 </details>
 
@@ -139,7 +139,7 @@ bit where the levels are set wrong on purpose and black falls below zero.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| .exe installer | [`atem-scopes.Setup.0.2.3.exe`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.3/atem-scopes.Setup.0.2.3.exe) | 121 MB |
+| .exe installer | [`atem-scopes.Setup.0.2.4.exe`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.4/atem-scopes.Setup.0.2.4.exe) | 121 MB |
 
 </details>
 
@@ -148,13 +148,13 @@ bit where the levels are set wrong on purpose and black falls below zero.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| AppImage | [`atem-scopes-0.2.3.AppImage`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.3/atem-scopes-0.2.3.AppImage) | 133 MB |
+| AppImage | [`atem-scopes-0.2.4.AppImage`](https://github.com/stoatworks-labs/atem-scopes/releases/download/v0.2.4/atem-scopes-0.2.4.AppImage) | 134 MB |
 
 </details>
 
 Also in this release:
 
-- [`atem-scopes-web.zip`](https://github.com/stoatworks-labs/atem-scopes/releases/latest/download/atem-scopes-web.zip) — Source tarball, 124 KB
+- [`atem-scopes-web.zip`](https://github.com/stoatworks-labs/atem-scopes/releases/latest/download/atem-scopes-web.zip) — Source tarball, 122 KB
 
 All builds, checksums and release notes: [github.com/stoatworks-labs/atem-scopes/releases](https://github.com/stoatworks-labs/atem-scopes/releases).
 
