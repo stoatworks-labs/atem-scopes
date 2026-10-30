@@ -28,6 +28,6 @@ Video scopes around a live ATEM multiview. Electron + React + TypeScript + WebGL
   plots with.
 - Read-only towards the switcher, deliberately. Don't add setters to `atemConnection.ts`.
 - Public MIT repo. Ships a user-facing AI disclaimer. "Commit" = commit **and** push.
-- Cross-compile macOS x86_64 on macos-14 (never macos-13).
+- Cross-compile macOS x86_64 on macos-15 (never macos-13).
 
 See [AGENTS.md](AGENTS.md) for the model, the traps and an honest verified/unverified split.

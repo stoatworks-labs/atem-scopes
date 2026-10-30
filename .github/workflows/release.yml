@@ -6,7 +6,7 @@ name: release
 # Trigger by pushing a v* tag, or manually (Actions > release > Run workflow) to
 # check that all three still build without publishing anything.
 #
-# macOS x86_64 is cross-compiled on macos-14. The Intel macOS runners are retired
+# macOS x86_64 is cross-compiled on macos-15. The Intel macOS runners are retired
 # — never macos-13.
 #
 # Installers are unsigned. On macOS that means Gatekeeper will quarantine them,
@@ -31,7 +31,7 @@ jobs:
         include:
           - { name: linux, os: ubuntu-latest, platform: '--linux' }
           - { name: windows, os: windows-latest, platform: '--win' }
-          - { name: macos, os: macos-14, platform: '--mac' }
+          - { name: macos, os: macos-15, platform: '--mac' }
     steps:
       - uses: actions/checkout@v7
 

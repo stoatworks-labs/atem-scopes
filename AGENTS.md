@@ -137,7 +137,7 @@ When you add a claim to the README, make sure it is one of the two kinds above a
   that _could_ switch is one mis-click from doing it on air. `atemConnection.ts` exposes no setters;
   don't add any.
 - "Commit" means commit **and** push.
-- Cross-compile macOS x86_64 on `macos-14`, never `macos-13`.
+- Cross-compile macOS x86_64 on `macos-15`, never `macos-13`.
 
 ## Notes
 

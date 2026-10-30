@@ -11,7 +11,7 @@ files:
   - '!{.eslintcache,eslint.config.mjs,.prettierrc,tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
   - '!{.env,.env.*,.npmrc}'
 mac:
-  # Cross-compiling x86_64 must happen on macos-14; macos-13 runners are gone.
+  # Cross-compiling x86_64 must happen on macos-15; macos-13 runners are gone.
   target:
     - target: dmg
       arch: [arm64, x64]
