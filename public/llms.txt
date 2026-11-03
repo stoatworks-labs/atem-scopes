@@ -1,0 +1,16 @@
+# atem-scopes
+
+> Scopes around an ATEM multiview
+
+Video scopes laid out around a live ATEM multiview. Waveform, vectorscope, histogram, false colour, zebras and focus peaking on any multiview window, program and preview included, with each source named live from the switcher's own multiviewer config. There's a desktop app and a browser build.
+
+This address is the browser build. It captures the switcher's multiview over USB and runs entirely in the browser: the video is measured on your machine and never leaves it. It has no switcher link, because the ATEM control protocol is UDP and a web page can't send UDP, so you name each region yourself when you draw it. The desktop app reads the names from the switcher.
+
+Add `?demo=1` to the address to start the built-in test pattern instead of a capture device.
+
+## Links
+
+- [Project page](https://stoatworks-labs.com/software/atem-scopes/): downloads, the user guide and a video
+- [User guide](https://stoatworks-labs.com/software/atem-scopes/guide/)
+- [Demo on the built-in test pattern](https://atem-scopes.stoatworks-labs.com/?demo=1)
+- [Source on GitHub](https://github.com/stoatworks-labs/atem-scopes) (MIT)
